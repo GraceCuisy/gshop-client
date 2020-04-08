@@ -1,28 +1,32 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="app">
+    <Header/>
+    <!-- 一级路由在此显示 -->
+    <router-view></router-view>
+    <Footer v-if="!$route.meta.isHideFooter"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import {reqBaseCategoryList} from "@/api";
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  async mounted(){
+    // 触发vuex管理中的actions中的getBaseCategoryList方法调用,发送请求,得到三级列表的数据
+    this.$store.dispatch('getBaseCategoryList');
+
+    // const result=await reqBaseCategoryList();
+    // console.log(result);
+  },
+  
+  components:{
+    Header,
+    Footer,
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="less" scoped>
 </style>
