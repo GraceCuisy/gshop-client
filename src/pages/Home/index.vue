@@ -14,11 +14,9 @@
     <!-- 猜你喜欢 -->
     <Like/>
 
-    <!--楼层-->
-    <Floor/>
-
-    <!--楼层-->
-    <Floor/>
+    <!-- 楼层 -->
+    <!-- 楼层数量是不固定的，需要通过遍历产生 -->
+    <Floor v-for="floor in floors" :key="floor.id" :floor="floor"/>
 
     <!--商标-->
     <Brand/>
@@ -26,6 +24,7 @@
 </template>
 
 <script>
+  import { mapState } from "vuex";
   import TodayRecommend from "./TodayRecommend/TodayRecommend";
   import ListContainer from "./ListContainer/ListContainer";
   import Rank from "./Rank/Rank";
@@ -46,6 +45,11 @@
       Like,
       Floor,
       Brand,
+    },
+    computed:{
+      ...mapState({
+        floors:state => state.home.floors,
+      })
     }
   }
 </script>
